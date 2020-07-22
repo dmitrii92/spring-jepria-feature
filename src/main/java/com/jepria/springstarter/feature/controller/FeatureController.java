@@ -2,6 +2,7 @@ package com.jepria.springstarter.feature.controller;
 
 import com.jepria.springstarter.feature.model.*;
 import com.jepria.springstarter.feature.repos.FeatureRepo;
+import com.jepria.springstarter.feature.repos.FeatureStatusRepo;
 import com.jepria.springstarter.feature.service.FeatureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -13,7 +14,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,70 +22,73 @@ import java.util.Optional;
 @RequestMapping("/feature")
 public class FeatureController {
 
-  @Autowired
-  private FeatureRepo repo;
-
-  @Autowired
+  private FeatureRepo featureRepo;
+  private FeatureStatusRepo featureStatusRepo;
   private FeatureService service;
 
-  public FeatureController(FeatureRepo repo, FeatureService service) {
-    this.repo = repo;
+  @Autowired
+  public FeatureController(FeatureRepo featureRepo, FeatureStatusRepo featureStatusRepo, FeatureService service) {
+    this.featureRepo = featureRepo;
+    this.featureStatusRepo = featureStatusRepo;
     this.service = service;
   }
 
   @GetMapping("/{featureId}")
   public ResponseEntity<Feature> getFeature(@PathVariable Integer featureId) {
-    Optional<Feature> feature = repo.findById(featureId);
+    Optional<Feature> feature = featureRepo.findById(featureId);
 
     return new ResponseEntity<>(feature.get(), HttpStatus.OK);
   }
 
   @PostMapping("")
-  public ResponseEntity<Feature> create(@RequestBody FeatureCreate featureCreate) {
-    Feature feature = new Feature();
-    feature.setFeatureName(featureCreate.getFeatureName());
-    feature.setFeatureNameEn(featureCreate.getFeatureNameEn());
-    feature.setDescription(featureCreate.getDescription());
-    feature.setDateIns(new Date());
-    repo.save(feature);
-    return new ResponseEntity<>(feature, HttpStatus.CREATED);
+  public ResponseEntity create(@RequestBody FeatureCreate featureCreate) {
+    Integer featureId = service.create(featureCreate);
+
+    HttpHeaders headers = new HttpHeaders();
+    URI location = ServletUriComponentsBuilder
+        .fromCurrentRequest()
+        .buildAndExpand(featureId).toUri(); //TODO
+    headers.setLocation(location);
+/*    List<String> exposeHeaders = new ArrayList<String>();
+    exposeHeaders.add("Location");*/
+
+    return new ResponseEntity<>(headers, HttpStatus.CREATED);
   }
 
   @PutMapping("/{featureId}")
   public ResponseEntity updateFeature(@PathVariable Integer featureId, @RequestBody FeatureUpdate updateFeature) {
-    Optional<Feature> featureOptional = repo.findById(featureId);
+    Optional<Feature> featureOptional = featureRepo.findById(featureId);
     Feature feature = featureOptional.get();
     feature.setFeatureName(updateFeature.getFeatureName());
     feature.setFeatureNameEn(updateFeature.getFeatureNameEn());
     feature.setDescription(updateFeature.getDescription());
 
-    repo.save(feature);
+    featureRepo.save(feature);
 
     return new ResponseEntity(HttpStatus.OK);
   }
 
   @GetMapping("")
   public ResponseEntity<Iterable<Feature>> getFeatures() {
-    Iterable<Feature> features = repo.findAll();
+    Iterable<Feature> features = featureRepo.findAll();
 
     return new ResponseEntity<>(features, HttpStatus.OK);
   }
 
   @PostMapping("search")
   public ResponseEntity postSearch(@RequestBody SearchRequest<FeatureSearch> searchRequestDto) {
-    String searchId =  service.postSearch(searchRequestDto);
+    String searchId = service.postSearch(searchRequestDto);
     HttpHeaders headers = new HttpHeaders();
 
     URI location = ServletUriComponentsBuilder
         .fromCurrentRequest()
-        .buildAndExpand(searchId).toUri();
+        .buildAndExpand(searchId).toUri(); //TODO
     headers.setLocation(location);
     List<String> exposeHeaders = new ArrayList<String>();
     exposeHeaders.add("Location");
     headers.setAccessControlExposeHeaders(exposeHeaders);
-    ResponseEntity response =  new ResponseEntity<>(headers, HttpStatus.CREATED);
+    ResponseEntity response = new ResponseEntity<>(headers, HttpStatus.CREATED);
     return response;
-
   }
 
   @GetMapping("search/{searchId}/resultset-size")
@@ -96,6 +99,12 @@ public class FeatureController {
   @GetMapping("search/{searchId}/resultset")
   public ResponseEntity<List<Feature>> getResultSet(@PathVariable String searchId, @PathParam("pageSize") Integer pageSize, @PathParam("page") Integer page) {
     return new ResponseEntity<>(service.getResultSet(searchId), HttpStatus.OK);
+  }
+
+  @GetMapping("option/feature-status")
+  public ResponseEntity<List<FeatureStatus>> getFeatureStatus() {
+    List<FeatureStatus> featureStatus = (List<FeatureStatus>) featureStatusRepo.findAll();
+    return new ResponseEntity<>(featureStatus, HttpStatus.OK);
   }
 
 }

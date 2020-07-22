@@ -1,4 +1,4 @@
-package com.jepria.springstarter.feature;
+package com.jepria.springstarter;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
