@@ -1,5 +1,6 @@
-package com.jepria.springstarter.api;
+package com.jepria.springstarter.feature.controller;
 
+import com.jepria.springstarter.feature.model.CounterContent;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;

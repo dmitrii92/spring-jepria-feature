@@ -1,4 +1,4 @@
-package com.jepria.springstarter;
+package com.jepria.springstarter.feature;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

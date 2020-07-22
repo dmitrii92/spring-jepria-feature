@@ -1,4 +1,4 @@
-package com.jepria.springstarter;
+package com.jepria.springstarter.feature;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpringStarterApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpringStarterApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(SpringStarterApplication.class, args);
+  }
 
 }

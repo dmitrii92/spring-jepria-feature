@@ -1,4 +1,4 @@
-package com.jepria.springstarter.api;
+package com.jepria.springstarter.feature.model;
 
 public class CounterContent {
   private final long id;
