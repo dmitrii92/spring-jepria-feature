@@ -1,8 +1,6 @@
 package com.jepria.springstarter.feature.controller;
 
-import com.jepria.springstarter.feature.dto.FeatureCreateDto;
-import com.jepria.springstarter.feature.dto.FeatureDto;
-import com.jepria.springstarter.feature.dto.FeatureUpdateDto;
+import com.jepria.springstarter.feature.dto.*;
 import com.jepria.springstarter.feature.model.*;
 import com.jepria.springstarter.feature.repository.FeatureStatusRepo;
 import com.jepria.springstarter.feature.service.FeatureService;
@@ -74,7 +72,7 @@ public class FeatureController {
   }
 
   @PostMapping("search")
-  public ResponseEntity postSearch(@RequestBody SearchRequest<FeatureSearch> searchRequestDto) {
+  public ResponseEntity postSearch(@RequestBody SearchRequest<FeatureSearchDto> searchRequestDto) {
     String searchId = service.postSearch(searchRequestDto);
     HttpHeaders headers = new HttpHeaders();
 

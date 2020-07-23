@@ -1,4 +1,4 @@
-package com.jepria.springstarter.feature.model;
+package com.jepria.springstarter.feature.dto;
 
 public class ColumnSortConfiguration {
   String columnName;

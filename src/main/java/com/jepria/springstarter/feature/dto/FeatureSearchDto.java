@@ -1,9 +1,9 @@
-package com.jepria.springstarter.feature.model;
+package com.jepria.springstarter.feature.dto;
 
 import java.util.Date;
 import java.util.List;
 
-public class FeatureSearch {
+public class FeatureSearchDto {
   private Integer featureId;
   private String featureNameTemplate;
   private String featureNameEnTemplate;

@@ -5,9 +5,8 @@ import com.jepria.springstarter.feature.dto.FeatureDto;
 import com.jepria.springstarter.feature.dto.FeatureUpdateDto;
 import com.jepria.springstarter.feature.mapper.FeatureMapper;
 import com.jepria.springstarter.feature.model.Feature;
-import com.jepria.springstarter.feature.model.FeatureCreate;
-import com.jepria.springstarter.feature.model.FeatureSearch;
-import com.jepria.springstarter.feature.model.SearchRequest;
+import com.jepria.springstarter.feature.dto.FeatureSearchDto;
+import com.jepria.springstarter.feature.dto.SearchRequest;
 import com.jepria.springstarter.feature.repository.FeatureRepo;
 import com.jepria.springstarter.featureprocess.service.FeatureProcessService;
 import org.springframework.stereotype.Service;
@@ -31,9 +30,9 @@ public class FeatureService {
     this.featureProcessService = featureProcessService;
   }
 
-  public String postSearch(SearchRequest<FeatureSearch> searchRequestDto) {
+  public String postSearch(SearchRequest<FeatureSearchDto> searchRequestDto) {
 
-    FeatureSearch templateFeature = searchRequestDto.getTemplate();
+    FeatureSearchDto templateFeature = searchRequestDto.getTemplate();
 
     searchId = "searchID";
 
