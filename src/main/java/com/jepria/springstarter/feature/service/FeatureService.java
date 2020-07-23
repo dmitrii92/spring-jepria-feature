@@ -1,12 +1,15 @@
 package com.jepria.springstarter.feature.service;
 
+import com.jepria.springstarter.feature.dto.FeatureCreateDto;
+import com.jepria.springstarter.feature.dto.FeatureDto;
+import com.jepria.springstarter.feature.dto.FeatureUpdateDto;
+import com.jepria.springstarter.feature.mapper.FeatureMapper;
 import com.jepria.springstarter.feature.model.Feature;
 import com.jepria.springstarter.feature.model.FeatureCreate;
 import com.jepria.springstarter.feature.model.FeatureSearch;
 import com.jepria.springstarter.feature.model.SearchRequest;
-import com.jepria.springstarter.feature.repos.FeatureRepo;
+import com.jepria.springstarter.feature.repository.FeatureRepo;
 import com.jepria.springstarter.featureprocess.service.FeatureProcessService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -55,11 +58,11 @@ public class FeatureService {
     return foundedFeatures;
   }
 
-  public Integer create(FeatureCreate featureCreate) {
+  public Integer create(FeatureCreateDto featureCreateDto) {
     Feature feature = new Feature();
-    feature.setFeatureName(featureCreate.getFeatureName());
-    feature.setFeatureNameEn(featureCreate.getFeatureNameEn());
-    feature.setDescription(featureCreate.getDescription());
+    feature.setFeatureName(featureCreateDto.getFeatureName());
+    feature.setFeatureNameEn(featureCreateDto.getFeatureNameEn());
+    feature.setDescription(featureCreateDto.getDescription());
     feature.setDateIns(new Date());
 
     featureRepo.save(feature);
@@ -68,4 +71,31 @@ public class FeatureService {
     return feature.getFeatureId();
   }
 
+  public Feature get(Integer featureId) {
+    Optional<Feature> feature = featureRepo.findById(featureId);
+    return feature.orElse(null);
+  }
+
+  public boolean update(Integer featureId, FeatureUpdateDto updateDto) {
+    Optional<Feature> featureOptional = featureRepo.findById(featureId);
+    Feature feature = featureOptional.orElse(null);
+    if (null != feature) {
+      feature.setFeatureName(updateDto.getFeatureName());
+      feature.setFeatureNameEn(updateDto.getFeatureNameEn());
+      feature.setDescription(updateDto.getDescription());
+      featureRepo.save(feature);
+      return true;
+    }
+    return false;
+  }
+
+  public void delete(Integer featureId) {
+    featureRepo.deleteById(featureId);
+  }
+
+  public List<FeatureDto> getAll() {
+    List<FeatureDto> dtos = new ArrayList<>();
+    featureRepo.findAll().forEach(feature -> dtos.add(FeatureMapper.toFeatureDto(feature)));
+    return dtos;
+  }
 }

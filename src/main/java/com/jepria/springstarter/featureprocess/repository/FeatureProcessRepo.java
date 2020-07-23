@@ -1,4 +1,4 @@
-package com.jepria.springstarter.featureprocess.repos;
+package com.jepria.springstarter.featureprocess.repository;
 
 import com.jepria.springstarter.featureprocess.model.FeatureProcess;
 import org.springframework.data.repository.CrudRepository;

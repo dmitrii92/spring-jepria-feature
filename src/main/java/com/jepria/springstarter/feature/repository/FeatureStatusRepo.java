@@ -1,4 +1,4 @@
-package com.jepria.springstarter.feature.repos;
+package com.jepria.springstarter.feature.repository;
 
 import com.jepria.springstarter.feature.model.FeatureStatus;
 import org.springframework.data.repository.CrudRepository;

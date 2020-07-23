@@ -2,7 +2,7 @@ package com.jepria.springstarter.featureprocess.controller;
 
 import com.jepria.springstarter.featureprocess.model.FeatureProcess;
 import com.jepria.springstarter.featureprocess.model.FeatureProcessCreate;
-import com.jepria.springstarter.featureprocess.repos.FeatureProcessRepo;
+import com.jepria.springstarter.featureprocess.repository.FeatureProcessRepo;
 import com.jepria.springstarter.featureprocess.service.FeatureProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

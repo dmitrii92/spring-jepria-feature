@@ -1,7 +1,7 @@
 package com.jepria.springstarter.featureprocess.service;
 
 import com.jepria.springstarter.featureprocess.model.FeatureProcess;
-import com.jepria.springstarter.featureprocess.repos.FeatureProcessRepo;
+import com.jepria.springstarter.featureprocess.repository.FeatureProcessRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
