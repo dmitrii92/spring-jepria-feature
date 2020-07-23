@@ -50,8 +50,14 @@ public class FeatureProcessService {
   }
 
   public FeatureStatusDto getLastFeatureStatus(Integer featureId) {
-    FeatureStatus featureStatus = repo.findFirstByFeatureIdOrderByDateIns(featureId).getFeatureStatus();
-    return new FeatureStatusDto(featureStatus.getValue(), featureStatus.getName());
+    FeatureProcess featureProcess = repo.findFirstByFeatureIdOrderByFeatureProcessIdDesc(featureId);
+    if (null != featureProcess) {
+      FeatureStatus featureStatus = featureProcess.getFeatureStatus();
+      if (null != featureStatus) {
+        return new FeatureStatusDto(featureStatus.getValue(), featureStatus.getName());
+      }
+    }
+    return null;
   }
 
   public List<FeatureStatusDto> getStatusOptions() {

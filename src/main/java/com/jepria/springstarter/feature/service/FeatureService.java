@@ -3,7 +3,6 @@ package com.jepria.springstarter.feature.service;
 import com.jepria.springstarter.feature.dto.*;
 import com.jepria.springstarter.feature.mapper.FeatureMapper;
 import com.jepria.springstarter.feature.model.Feature;
-import com.jepria.springstarter.feature.model.FeatureStatus;
 import com.jepria.springstarter.feature.repository.FeatureRepo;
 import com.jepria.springstarter.featureprocess.service.FeatureProcessService;
 import org.springframework.stereotype.Service;
@@ -40,7 +39,11 @@ public class FeatureService {
       feature.ifPresent(value -> foundedFeatures.add(FeatureMapper.toFeatureDto(value)));
     } else {
       List<Feature> features = (List<Feature>) featureRepo.findAll();
-      features.forEach(feature -> foundedFeatures.add(FeatureMapper.toFeatureDto(feature)));
+      features.forEach(feature -> {
+        FeatureDto dto = FeatureMapper.toFeatureDto(feature);
+        dto.setFeatureStatus(featureProcessService.getLastFeatureStatus(feature.getFeatureId()));
+        foundedFeatures.add(dto);
+      });
     }
 
     return searchId;
@@ -96,7 +99,11 @@ public class FeatureService {
 
   public List<FeatureDto> getAll() {
     List<FeatureDto> dtos = new ArrayList<>();
-    featureRepo.findAll().forEach(feature -> dtos.add(FeatureMapper.toFeatureDto(feature)));
+    featureRepo.findAll().forEach(feature -> {
+      FeatureDto dto = FeatureMapper.toFeatureDto(feature);
+      dto.setFeatureStatus(featureProcessService.getLastFeatureStatus(feature.getFeatureId()));
+      dtos.add(dto);
+    });
     return dtos;
   }
 

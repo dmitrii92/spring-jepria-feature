@@ -1,7 +1,6 @@
 package com.jepria.springstarter.feature.controller;
 
 import com.jepria.springstarter.feature.dto.*;
-import com.jepria.springstarter.featureprocess.repository.FeatureStatusRepo;
 import com.jepria.springstarter.feature.service.FeatureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,12 +19,10 @@ import java.util.List;
 @RequestMapping("/feature")
 public class FeatureController {
 
-  private FeatureStatusRepo featureStatusRepo;
   private FeatureService service;
 
   @Autowired
-  public FeatureController(FeatureStatusRepo featureStatusRepo, FeatureService service) {
-    this.featureStatusRepo = featureStatusRepo;
+  public FeatureController(FeatureService service) {
     this.service = service;
   }
 
