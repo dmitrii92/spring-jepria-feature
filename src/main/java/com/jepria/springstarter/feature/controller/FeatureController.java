@@ -1,8 +1,7 @@
 package com.jepria.springstarter.feature.controller;
 
 import com.jepria.springstarter.feature.dto.*;
-import com.jepria.springstarter.feature.model.*;
-import com.jepria.springstarter.feature.repository.FeatureStatusRepo;
+import com.jepria.springstarter.featureprocess.repository.FeatureStatusRepo;
 import com.jepria.springstarter.feature.service.FeatureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -31,8 +30,8 @@ public class FeatureController {
   }
 
   @GetMapping("/{featureId}")
-  public ResponseEntity<Feature> getFeature(@PathVariable Integer featureId) {
-    Feature feature = service.get(featureId);
+  public ResponseEntity<FeatureDto> getFeature(@PathVariable Integer featureId) {
+    FeatureDto feature = service.get(featureId);
     return new ResponseEntity<>(feature, HttpStatus.OK);
   }
 
@@ -92,13 +91,13 @@ public class FeatureController {
   }
 
   @GetMapping("search/{searchId}/resultset")
-  public ResponseEntity<List<Feature>> getResultSet(@PathVariable String searchId, @PathParam("pageSize") Integer pageSize, @PathParam("page") Integer page) {
+  public ResponseEntity<List<FeatureDto>> getResultSet(@PathVariable String searchId, @PathParam("pageSize") Integer pageSize, @PathParam("page") Integer page) {
     return new ResponseEntity<>(service.getResultSet(searchId), HttpStatus.OK);
   }
 
   @GetMapping("option/feature-status")
-  public ResponseEntity<List<FeatureStatus>> getFeatureStatus() {
-    List<FeatureStatus> featureStatus = (List<FeatureStatus>) featureStatusRepo.findAll();
+  public ResponseEntity<List<FeatureStatusDto>> getFeatureStatus() {
+    List<FeatureStatusDto> featureStatus = service.getStatusOptions();
     return new ResponseEntity<>(featureStatus, HttpStatus.OK);
   }
 

@@ -1,28 +1,63 @@
 package com.jepria.springstarter.featureprocess.service;
 
+import com.jepria.springstarter.feature.dto.FeatureStatusDto;
+import com.jepria.springstarter.feature.model.FeatureStatus;
+import com.jepria.springstarter.featureprocess.dto.FeatureProcessDto;
+import com.jepria.springstarter.featureprocess.mapper.FeatureProcessMapper;
 import com.jepria.springstarter.featureprocess.model.FeatureProcess;
 import com.jepria.springstarter.featureprocess.repository.FeatureProcessRepo;
+import com.jepria.springstarter.featureprocess.repository.FeatureStatusRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class FeatureProcessService {
 
   private FeatureProcessRepo repo;
+  private FeatureStatusRepo featureStatusRepo;
 
-  public FeatureProcessService(FeatureProcessRepo repo) {
+  public FeatureProcessService(FeatureProcessRepo repo, FeatureStatusRepo featureStatusRepo) {
     this.repo = repo;
+    this.featureStatusRepo = featureStatusRepo;
   }
 
   public Integer create(Integer featureId, String featureStatusCode) {
     FeatureProcess featureProcess = new FeatureProcess();
     featureProcess.setDateIns(new Date());
     featureProcess.setFeatureId(featureId);
-    featureProcess.setFeatureStatusCode("NEW");
-    featureProcess.setFeatureStatusCode(featureStatusCode);
+    featureProcess.setFeatureStatus(getStatusByCode(featureStatusCode));
+
     repo.save(featureProcess);
     return featureProcess.getFeatureProcessId();
+  }
+
+  public FeatureProcessDto getById(String featureProcessId) {
+    return FeatureProcessMapper.toFeatureProcessDto(Objects.requireNonNull(repo.findById(featureProcessId).orElse(null)));
+  }
+
+  public List<FeatureProcessDto> getAllByFeatureId(Integer featureId) {
+    List<FeatureProcessDto> dtos = repo.findAllByFeatureId(featureId).stream().map(FeatureProcessMapper::toFeatureProcessDto).collect(Collectors.toList());
+    return dtos;
+  }
+
+  public FeatureStatus getStatusByCode(String featureStatusCode) {
+    return featureStatusRepo.findById(featureStatusCode).orElse(null);
+  }
+
+  public FeatureStatusDto getLastFeatureStatus(Integer featureId) {
+    FeatureStatus featureStatus = repo.findFirstByFeatureIdOrderByDateIns(featureId).getFeatureStatus();
+    return new FeatureStatusDto(featureStatus.getValue(), featureStatus.getName());
+  }
+
+  public List<FeatureStatusDto> getStatusOptions() {
+    List<FeatureStatusDto> dtos = new ArrayList<>();
+    featureStatusRepo.findAll().forEach(featureStatus -> dtos.add(new FeatureStatusDto(featureStatus.getValue(), featureStatus.getName())));
+    return dtos;
   }
 
 }

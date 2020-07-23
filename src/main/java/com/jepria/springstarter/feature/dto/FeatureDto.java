@@ -7,7 +7,7 @@ public class FeatureDto {
   private String featureName;
   private String featureNameEn;
   private String description;
-  private FeatureStatusDto featureStatusValue;
+  private FeatureStatusDto featureStatus;
   private Date dateIns;
   private Integer authorId;
   private Integer responsibleId;
@@ -44,12 +44,12 @@ public class FeatureDto {
     this.description = description;
   }
 
-  public FeatureStatusDto getFeatureStatusValue() {
-    return featureStatusValue;
+  public FeatureStatusDto getFeatureStatus() {
+    return featureStatus;
   }
 
-  public void setFeatureStatusValue(FeatureStatusDto featureStatusValue) {
-    this.featureStatusValue = featureStatusValue;
+  public void setFeatureStatus(FeatureStatusDto featureStatus) {
+    this.featureStatus = featureStatus;
   }
 
   public Date getDateIns() {

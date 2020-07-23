@@ -11,11 +11,6 @@ public class Feature {
   private String featureName;
   private String featureNameEn;
   private String description;
-//  private String featureStatusId;
-
-  @OneToOne
-  private FeatureStatus featureStatus;
-
   private Date dateIns;
   private Integer authorId;
   private Integer responsibleId;
@@ -60,14 +55,6 @@ public class Feature {
     this.dateIns = dateIns;
   }
 
-//  public String getFeatureStatusId() {
-//    return featureStatusId;
-//  }
-//
-//  public void setFeatureStatusId(String featureStatusId) {
-//    this.featureStatusId = featureStatusId;
-//  }
-
   public Integer getAuthorId() {
     return authorId;
   }
@@ -84,12 +71,4 @@ public class Feature {
     this.responsibleId = responsibleId;
   }
 
-
-  public FeatureStatus getFeatureStatus() {
-    return featureStatus;
-  }
-
-  public void setFeatureStatus(FeatureStatus featureStatus) {
-    this.featureStatus = featureStatus;
-  }
 }

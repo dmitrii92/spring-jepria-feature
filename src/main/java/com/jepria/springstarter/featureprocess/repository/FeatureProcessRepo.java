@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface FeatureProcessRepo extends CrudRepository<FeatureProcess, String> {
   List<FeatureProcess> findAllByFeatureId(Integer featureId);
+  FeatureProcess findFirstByFeatureIdOrderByDateIns(Integer featureId);
 }

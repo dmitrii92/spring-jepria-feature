@@ -1,9 +1,8 @@
 package com.jepria.springstarter.featureprocess.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.jepria.springstarter.feature.model.FeatureStatus;
+
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -12,9 +11,8 @@ public class FeatureProcess {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Integer featureProcessId;
   private Integer featureId;
-
-  private String featureStatusCode;
-  private String featureStatusName;
+  @OneToOne
+  private FeatureStatus featureStatus;
   private Date dateIns;
 
   public Integer getFeatureProcessId() {
@@ -33,27 +31,19 @@ public class FeatureProcess {
     this.featureId = featureId;
   }
 
-  public String getFeatureStatusCode() {
-    return featureStatusCode;
-  }
-
-  public void setFeatureStatusCode(String featureStatusCode) {
-    this.featureStatusCode = featureStatusCode;
-  }
-
-  public String getFeatureStatusName() {
-    return featureStatusName;
-  }
-
-  public void setFeatureStatusName(String featureStatusName) {
-    this.featureStatusName = featureStatusName;
-  }
-
   public Date getDateIns() {
     return dateIns;
   }
 
   public void setDateIns(Date dateIns) {
     this.dateIns = dateIns;
+  }
+
+  public FeatureStatus getFeatureStatus() {
+    return featureStatus;
+  }
+
+  public void setFeatureStatus(FeatureStatus featureStatus) {
+    this.featureStatus = featureStatus;
   }
 }
