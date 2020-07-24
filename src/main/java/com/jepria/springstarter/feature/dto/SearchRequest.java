@@ -1,7 +1,5 @@
 package com.jepria.springstarter.feature.dto;
 
-import com.jepria.springstarter.feature.dto.ColumnSortConfiguration;
-
 public class SearchRequest<T> {
   T template;
   ColumnSortConfiguration listSortConfiguration;

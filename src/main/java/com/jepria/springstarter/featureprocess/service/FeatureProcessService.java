@@ -36,13 +36,12 @@ public class FeatureProcessService {
     return featureProcess.getFeatureProcessId();
   }
 
-  public FeatureProcessDto getById(String featureProcessId) {
+  public FeatureProcessDto getById(Integer featureProcessId) {
     return FeatureProcessMapper.toFeatureProcessDto(Objects.requireNonNull(repo.findById(featureProcessId).orElse(null)));
   }
 
   public List<FeatureProcessDto> getAllByFeatureId(Integer featureId) {
-    List<FeatureProcessDto> dtos = repo.findAllByFeatureId(featureId).stream().map(FeatureProcessMapper::toFeatureProcessDto).collect(Collectors.toList());
-    return dtos;
+    return repo.findAllByFeatureId(featureId).stream().map(FeatureProcessMapper::toFeatureProcessDto).collect(Collectors.toList());
   }
 
   public FeatureStatus getStatusByCode(String featureStatusCode) {
@@ -64,6 +63,10 @@ public class FeatureProcessService {
     List<FeatureStatusDto> dtos = new ArrayList<>();
     featureStatusRepo.findAll().forEach(featureStatus -> dtos.add(new FeatureStatusDto(featureStatus.getValue(), featureStatus.getName())));
     return dtos;
+  }
+
+  public void delete(Integer featureProcessId) {
+    repo.deleteById(featureProcessId);
   }
 
 }

@@ -37,9 +37,7 @@ public class FeatureController {
     Integer featureId = service.create(featureCreate);
 
     HttpHeaders headers = new HttpHeaders();
-    URI location = ServletUriComponentsBuilder
-        .fromCurrentRequest()
-        .buildAndExpand(featureId).toUri(); //TODO
+    URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(featureId).toUri();
     headers.setLocation(location);
 /*    List<String> exposeHeaders = new ArrayList<String>();
     exposeHeaders.add("Location");*/
