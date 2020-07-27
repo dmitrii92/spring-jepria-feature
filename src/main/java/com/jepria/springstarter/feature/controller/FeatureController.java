@@ -2,6 +2,7 @@ package com.jepria.springstarter.feature.controller;
 
 import com.jepria.springstarter.feature.dto.*;
 import com.jepria.springstarter.feature.service.FeatureService;
+import com.jepria.springstarter.featureprocess.service.FeatureProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,10 +21,12 @@ import java.util.List;
 public class FeatureController {
 
   private FeatureService service;
+  private FeatureProcessService featureProcessService;
 
   @Autowired
-  public FeatureController(FeatureService service) {
+  public FeatureController(FeatureService service, FeatureProcessService featureProcessService) {
     this.service = service;
+    this.featureProcessService = featureProcessService;
   }
 
   @GetMapping("/{featureId}")
@@ -96,5 +99,10 @@ public class FeatureController {
     return new ResponseEntity<>(featureStatus, HttpStatus.OK);
   }
 
+  @PostMapping("option/feature-status")
+  public ResponseEntity setFeatureStatus(@RequestBody List<FeatureStatusDto> options) {
+    featureProcessService.setStatusOptions(options);
+    return new ResponseEntity<>(HttpStatus.OK);
+  }
 }
 

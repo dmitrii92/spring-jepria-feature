@@ -65,6 +65,16 @@ public class FeatureProcessService {
     return dtos;
   }
 
+  public void setStatusOptions(List<FeatureStatusDto> options) {
+    featureStatusRepo.deleteAll();
+    options.stream().forEach(featureStatusDto -> {
+      FeatureStatus status = new FeatureStatus();
+      status.setName(featureStatusDto.getName());
+      status.setValue(featureStatusDto.getValue());
+      featureStatusRepo.save(status);
+    });
+  }
+
   public void delete(Integer featureProcessId) {
     repo.deleteById(featureProcessId);
   }
