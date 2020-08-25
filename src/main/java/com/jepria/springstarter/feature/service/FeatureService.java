@@ -110,4 +110,9 @@ public class FeatureService {
   public List<FeatureStatusDto> getStatusOptions() {
     return featureProcessService.getStatusOptions();
   }
+
+  public void setStatusOptions(List<FeatureStatusDto> options) {
+    featureProcessService.setStatusOptions(options);
+  }
+
 }

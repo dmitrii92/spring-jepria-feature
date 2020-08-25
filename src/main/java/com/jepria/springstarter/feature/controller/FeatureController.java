@@ -21,12 +21,10 @@ import java.util.List;
 public class FeatureController {
 
   private FeatureService service;
-  private FeatureProcessService featureProcessService;
 
   @Autowired
-  public FeatureController(FeatureService service, FeatureProcessService featureProcessService) {
+  public FeatureController(FeatureService service) {
     this.service = service;
-    this.featureProcessService = featureProcessService;
   }
 
   @GetMapping("/{featureId}")
@@ -101,7 +99,7 @@ public class FeatureController {
 
   @PostMapping("option/feature-status")
   public ResponseEntity setFeatureStatus(@RequestBody List<FeatureStatusDto> options) {
-    featureProcessService.setStatusOptions(options);
+    service.setStatusOptions(options);
     return new ResponseEntity<>(HttpStatus.OK);
   }
 }
