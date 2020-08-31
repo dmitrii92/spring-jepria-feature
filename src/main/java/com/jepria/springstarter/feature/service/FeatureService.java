@@ -64,10 +64,10 @@ public class FeatureService {
     feature.setDescription(featureCreateDto.getDescription());
     feature.setDateIns(new Date());
 
-    featureRepo.save(feature);
-    featureProcessService.create(feature.getFeatureId(), "NEW");
+    Feature savedFeature = featureRepo.save(feature);
+    featureProcessService.create(savedFeature.getFeatureId(), "NEW");
 
-    return feature.getFeatureId();
+    return savedFeature.getFeatureId();
   }
 
   public FeatureDto get(Integer featureId) {
