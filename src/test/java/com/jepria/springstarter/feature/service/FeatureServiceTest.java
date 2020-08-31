@@ -1,6 +1,8 @@
 package com.jepria.springstarter.feature.service;
 
 import com.jepria.springstarter.feature.dto.FeatureCreateDto;
+import com.jepria.springstarter.feature.dto.FeatureDto;
+import com.jepria.springstarter.feature.mapper.FeatureMapper;
 import com.jepria.springstarter.feature.model.Feature;
 import com.jepria.springstarter.feature.repository.FeatureRepo;
 import com.jepria.springstarter.featureprocess.service.FeatureProcessService;
@@ -50,6 +52,21 @@ class FeatureServiceTest {
 
   @Test
   void get() {
+    Integer featureId = 10;
+
+    Feature featureExpected = new Feature();
+    featureExpected.setFeatureName("FeatureName");
+    featureExpected.setFeatureNameEn("FeatureNameEn");
+    featureExpected.setDescription("Description");
+    featureExpected.setDateIns(new Date());
+    featureExpected.setFeatureId(featureId);
+
+    when(repo.findById(featureId)).thenReturn(java.util.Optional.of(featureExpected));
+
+    FeatureService service = new FeatureService(repo, featureProcessService);
+    FeatureDto dto = service.get(featureId);
+
+    Assertions.assertEquals(featureExpected.getFeatureId(), dto.getFeatureId(), "Error create feature, wrong featureID");
   }
 
   @Test
