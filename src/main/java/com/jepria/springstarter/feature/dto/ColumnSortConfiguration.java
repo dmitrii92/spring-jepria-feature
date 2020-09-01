@@ -1,22 +1,11 @@
 package com.jepria.springstarter.feature.dto;
 
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@Builder
 public class ColumnSortConfiguration {
   String columnName;
   String sortOrder;
-
-  public String getColumnName() {
-    return columnName;
-  }
-
-  public void setColumnName(String columnName) {
-    this.columnName = columnName;
-  }
-
-  public String getSortOrder() {
-    return sortOrder;
-  }
-
-  public void setSortOrder(String sortOrder) {
-    this.sortOrder = sortOrder;
-  }
 }
