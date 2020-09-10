@@ -9,8 +9,10 @@ public class FeatureProcessMapper {
     dto.setFeatureId(featureProcess.getFeatureId());
     dto.setFeatureProcessId(featureProcess.getFeatureProcessId());
     dto.setDateIns(featureProcess.getDateIns());
-    dto.setFeatureStatusCode(featureProcess.getFeatureStatus().getValue());
-    dto.setFeatureStatusName(featureProcess.getFeatureStatus().getName());
+    if (null != featureProcess.getFeatureStatus()) {
+      dto.setFeatureStatusCode(featureProcess.getFeatureStatus().getValue());
+      dto.setFeatureStatusName(featureProcess.getFeatureStatus().getName());
+    }
     return dto;
   }
 }
